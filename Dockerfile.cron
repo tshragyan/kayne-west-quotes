@@ -1,0 +1,18 @@
+# Используем официальный PHP образ с поддержкой FPM
+FROM php:8.2-fpm
+
+# Устанавливаем cron и необходимые расширения PHP
+RUN apt-get update && apt-get install -y cron libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql
+
+# Копируем текущий проект в контейнер
+WORKDIR /var/www/html
+
+# Добавляем cron-задачу для Laravel
+RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/laravel-cron
+
+# Делаем cron-задачу исполняемой
+RUN chmod 0644 /etc/cron.d/laravel-cron
+
+# Запускаем cron в режиме ожидания (foreground)
+CMD ["cron", "-f"]

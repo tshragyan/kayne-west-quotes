@@ -1,0 +1,29 @@
+version: '2.30.0'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      -   db
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+
+  db:
+    image: mysql:8.0
+    container_name: kayne_db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: kayne_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "33061:3306"
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+    command: --default-storage-engine=INNODB
+    restart: always
