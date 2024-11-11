@@ -1,6 +1,6 @@
 If you are using Docker:
 
- Run: docker compose up -d \n
+ Run: docker compose up -d 
 1) Run: cp .env.example .env
 2) Run: docker exec -it kayne-west-quotes-app-1 sh
 3) Inside the container, run: composer install
