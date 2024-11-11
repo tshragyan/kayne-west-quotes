@@ -8,6 +8,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 WORKDIR /app
 COPY . .
-CMD ["php", "artisan", "key:generate"]
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
 EXPOSE 8000
